@@ -1,0 +1,45 @@
+diff --git a/include/HTS_engine.h b/include/HTS_engine.h
+index f7eb317..a487e17 100644
+--- a/include/HTS_engine.h
++++ b/include/HTS_engine.h
+@@ -754,6 +754,12 @@ void HTS_Engine_save_generated_parameter(HTS_Engine * engine, HTS_File * fp, int
+ /* HTS_Engine_save_generated_speech: output generated speech */
+ void HTS_Engine_save_generated_speech(HTS_Engine * engine, HTS_File * fp);
+ 
++/* HTS_Engine_get_generated_speech_size: obtain generated speech size */
++unsigned int HTS_Engine_get_generated_speech_size(HTS_Engine * engine);
++
++/* HTS_Engine_get_generated_speech: obtain generated speech */
++void HTS_Engine_get_generated_speech(HTS_Engine * engine, short * buf);
++
+ /* HTS_Engine_save_riff: output RIFF format file */
+ void HTS_Engine_save_riff(HTS_Engine * engine, HTS_File * wavfp);
+ 
+diff --git a/lib/HTS_engine.c b/lib/HTS_engine.c
+index 41d0a8e..982a5af 100644
+--- a/lib/HTS_engine.c
++++ b/lib/HTS_engine.c
+@@ -651,6 +651,23 @@ void HTS_Engine_save_generated_speech(HTS_Engine * engine, HTS_File * fp)
+    }
+ }
+ 
++/* HTS_Engine_get_generated_speech_size: obtain generated speech size */
++unsigned int HTS_Engine_get_generated_speech_size(HTS_Engine * engine)
++{
++   return HTS_GStreamSet_get_total_nsample(&engine->gss);
++}
++
++/* HTS_Engine_get_generated_speech: obtain generated speech */
++void HTS_Engine_get_generated_speech(HTS_Engine * engine, short * buf)
++{
++   int i;
++   HTS_GStreamSet *gss = &engine->gss;
++
++   for (i = 0; i < HTS_GStreamSet_get_total_nsample(gss); i++) {
++      buf[i] = HTS_GStreamSet_get_speech(gss, i);
++   }
++}
++
+ /* HTS_Engine_save_riff: output RIFF format file */
+ void HTS_Engine_save_riff(HTS_Engine * engine, HTS_File * fp)
+ {
