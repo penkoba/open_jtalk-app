@@ -333,18 +333,14 @@ static FILE *get_fp(const char *name, const char *mode)
 	return (fp);
 }
 
-static void err_no_operand(const char *opt)
-{
-	app_error("operand for %s is missing.\n", opt);
-	exit(1);
-}
-
 static int find_operand(char **argv, char **endv, const char *opt)
 {
 	if (strcmp(*argv, opt))
 		return 0;
-	if (argv + 1 == endv)
-		err_no_operand(opt);
+	if (argv + 1 == endv) {
+		app_error("operand for %s is missing.\n", opt);
+		exit(1);
+	}
 	return 1;
 }
 
