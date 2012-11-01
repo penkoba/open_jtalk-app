@@ -376,7 +376,7 @@ static int parse_arg(struct app *app, int argc, char **argv)
 			app->fn_ws_lpf[app->num_ws_lpf++] = *++argv;
 		} else if (find_operand(argv, endv, "-ot")) {
 			app->logfp = get_fp(*++argv, "w");
-		} else if (find_operand(argv, endv, "-h")) {
+		} else if (!strcmp(*argv, "-h")) {
 			usage();
 		} else if (find_operand(argv, endv, "-s")) {
 			app->sampling_rate = atoi(*++argv);
