@@ -1,5 +1,5 @@
 # adjust this variable to your environment
-OJT_BUILD_DIR :=	$(HOME)/build/open_jtalk-1.05
+OJT_BUILD_DIR :=	$(HOME)/build/open_jtalk-1.06
 
 CC :=	gcc
 CFLAGS := \

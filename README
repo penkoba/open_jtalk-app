@@ -18,22 +18,51 @@ ALSAが使えるLinuxで動作します。
 
 1. OpenJTalkのコンパイル
 
-OpenJTalkのコンパイル手順はこちらを参照してください。
-http://pochi.usamimi.info/linux/open_jtalk.html
-
 本README記載時点で、以下のバージョンのコンポーネントが利用できます。
-	hts_engine_API-1.06.tar.gz
-	open_jtalk-1.05.tar.gz
-	open_jtalk_dic_utf_8-1.05.tar.gz
-	hts_voice_nitech_jp_atr503_m001-1.04.tar.gz
-	MMDAgent_Example-1.3.zip
+	hts_engine_API-1.07.tar.gz
+	open_jtalk-1.06.tar.gz
+	open_jtalk_dic_utf_8-1.06.tar.gz
+	hts_voice_nitech_jp_atr503_m001-1.05.tar.gz
 
 コンパイル前に、hts_engine_API には、本パッケージに含まれる
 以下のパッチを当ててください。
 合成結果をファイルではなくバッファに取得するためのAPIを追加しています。
-	hts_engine_API-1.06-tk01.patch
+	hts_engine_API-1.07-tk01.patch
 
-あとは上記サイトの手順どおりコンパイル、インストールします。
+以下、コンパイル＆インストール手順を簡単に示します。
+$DOWNLOAD はダウンロードディレクトリ、
+$BUILD はビルド用のワーキングディレクトリを示します。
+
+--- hts_engine_API-1.07
+% cd $BUILD
+% tar xvf $DOWNLOAD/hts_engine_API-1.07.tar.gz
+% cd hts_engine_API-1.07
+% patch -p1 < (open_jtalk-app)/hts_engine_API-1.07-tk01.patch
+% ./confugre
+% make
+% sudo make install
+
+--- open_jtalk-1.06
+% cd ~/build
+% tar xvf $DOWNLOAD/open_jtalk-1.06.tar.gz
+% cd open_jtalk-1.06
+% ./configure --with-charset=utf-8
+% make
+% sudo make install
+
+--- open_jtalk_dic_utf_8-1.06
+% cd /usr/local/share
+% sudo mkdir open_jtalk
+% cd open_jtalk
+% sudo tar xvf $DOWNLOAD/open_jtalk_dic_utf_8-1.06.tar.gz
+
+--- hts_voice_nitech_jp_atr503_m001-1.05
+% cd /usr/local/share
+% sudo mkdir hts_voice
+% cd hts_voice
+% sudo tar xvf $DOWNLOAD/hts_voice_nitech_jp_atr503_m001-1.05.tar.gz
+% sudo mv hts_voice_nitech_jp_atr503_m001-1.05 nitech_jp_atr503_m001-1.05
+
 
 OpenJTalkをビルドしたディレクトリは、本アプリケーションのビルドにも使用するので
 消さないでください。
@@ -63,6 +92,11 @@ tts_app ができます。
 wav出力ファイルオプション(-ow)はありません。
 サンプルのバッチファイル(sample-batch.sh)があるので、これを実行すれば
 合成音声が鳴ります。
+
+またhts_engine_API-1.07から使えるmeiちゃんの声のデータは
+名工大のあたりからは今のところリリースされている感がないのですが、
+mei_normal.htsvoice て検索するとひっかかりますので
+そちらを使えばmeiちゃんの声でもしゃべります。
 
 
 -----------------------------------------------------------------------
